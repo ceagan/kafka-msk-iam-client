@@ -10,6 +10,8 @@ ENV AWS_MSK_IAM_AUTH_URL https://github.com/aws/aws-msk-iam-auth/releases/downlo
 RUN curl "${KAFKA_URL}" --output - | tar -xzf -
 RUN curl --remote-name --output-dir kafka_2.12-2.8.1/libs "${AWS_MSK_IAM_AUTH_URL}"
 
-USER 1000
 WORKDIR /kafka_2.12-2.8.1
-ENTRYPOINT ["/bin/bash", "-l", "-c"]
+COPY client.properties bin
+
+USER 1000
+CMD [ "/bin/bash", "-l" ]
