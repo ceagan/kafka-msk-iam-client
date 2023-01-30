@@ -1,4 +1,5 @@
-# trunk-ignore(hadolint/DL3006) Always get latest because we are building and pushing to Docker Hub regularly
+# Always get latest because we are building and pushing to Docker Hub regularly
+# trunk-ignore(hadolint/DL3006)
 FROM redhat/ubi9
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
