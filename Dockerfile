@@ -8,13 +8,16 @@ RUN dnf -y install java-11 && dnf -y clean all && rm -rf /var/cache
 
 # See https://docs.aws.amazon.com/msk/latest/developerguide/create-serverless-cluster-client.html
 # Versions have been updated to newer available ones than those referenced in the documentation
-ENV KAFKA_URL https://archive.apache.org/dist/kafka/2.8.2/kafka_2.12-2.8.2.tgz
-ENV AWS_MSK_IAM_AUTH_URL https://github.com/aws/aws-msk-iam-auth/releases/download/v1.1.5/aws-msk-iam-auth-1.1.5-all.jar
+ENV KAFKA_VERSION 2.8.2
+ENV AWS_MSK_IAM_AUTH_VERSION 1.1.5
+
+ENV KAFKA_URL https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_2.12-${KAFKA_VERSION}.tgz
+ENV AWS_MSK_IAM_AUTH_URL https://github.com/aws/aws-msk-iam-auth/releases/download/v${AWS_MSK_IAM_AUTH_VERSION}/aws-msk-iam-auth-${AWS_MSK_IAM_AUTH_VERSION}-all.jar
 
 RUN curl --location "${KAFKA_URL}" --output - | tar -xzf -
-RUN curl --location --remote-name --output-dir kafka_2.12-2.8.1/libs "${AWS_MSK_IAM_AUTH_URL}"
+RUN curl --location --remote-name --output-dir kafka_2.12-${KAFKA_VERSION}/libs "${AWS_MSK_IAM_AUTH_URL}"
 
-WORKDIR /kafka_2.12-2.8.1
+WORKDIR /kafka_2.12-${KAFKA_VERSION}
 COPY client.properties bin
 
 USER 1000
